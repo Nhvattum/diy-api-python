@@ -1,6 +1,7 @@
 from models import app, Student
 from flask import jsonify, request
 from crud.post_crud import create_student
+from crud.put_crud import update_student
 
 # HOME ROUTE
 @app.route('/')
@@ -25,8 +26,10 @@ def students():
     else:
         return create_student(name=request.form['name'], age=request.form['age'], location=request.form['location'], grade=request.form['grade'])
 
-
-# POST ROUTE
-# @app.route('/new', method='POST')
-# def post():
+# UPDATE AND DELETE ROUTE
+@app.route('/students/<int:id>')
+def student():
+    student = Student.query.get(id)
+    if student:
+        return jsonify(student.as_dict())
 
